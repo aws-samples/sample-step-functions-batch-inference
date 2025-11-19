@@ -22,12 +22,6 @@ def handle_bedrock_task_complete(event: dict, context: LambdaContext):
     detail = event.get("detail", {})
     job_name = detail.get("batchJobName")
 
-    # NOTE: This is a workaround during development. If this lambda fails, but the Bedrock job has
-    # actually completed, you can trigger this lambda function manually by simply incuding the
-    # batchJobName in the payload. This makes it easier to resume the SFN workflow.
-    # {
-    #    "batchJobName": "1111111a0fba43cfaef1c03050ca33e1",
-    # }
     if not job_name:
         job_name = event.get("batchJobName")
 

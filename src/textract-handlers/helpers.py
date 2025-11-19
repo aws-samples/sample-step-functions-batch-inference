@@ -1,7 +1,6 @@
 import boto3
 from aws_lambda_powertools import Logger
 
-# This is a general logger to import and reuse
 logger = Logger()
 
 

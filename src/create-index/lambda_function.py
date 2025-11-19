@@ -25,19 +25,6 @@ def lambda_handler(event, context):
     log(f"Event: {json.dumps(event)}")
 
     session = boto3.Session()
-
-    # Get STS client from session
-    sts_client = session.client("sts")
-
-    # Get caller identity
-    caller_identity = sts_client.get_caller_identity()
-
-    # Print the caller identity information
-    log(f"Caller Identity: {caller_identity}")
-
-    # Specifically, print the ARN of the caller
-    log(f"ARN: {caller_identity['Arn']}")
-
     creds = session.get_credentials()
 
     # Get STS client from session
@@ -48,11 +35,9 @@ def lambda_handler(event, context):
 
     # Print the caller identity information
     log(f"Caller Identity: {caller_identity}")
-
-    # Specifically, print the ARN of the caller
     log(f"ARN: {caller_identity['Arn']}")
-
     log(f"HOST: {HOST}")
+
     host = HOST.split("//")[1]
 
     region = REGION_NAME
