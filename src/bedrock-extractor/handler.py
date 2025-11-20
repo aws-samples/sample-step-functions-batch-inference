@@ -69,18 +69,15 @@ def extract_bedrock_results(event, context: LambdaContext):
     bedrock_job_id = event["jobArn"].split("/")[-1]
     jsonl_key = f"{BEDROCK_BATCH_RESULTS_PREFIX}/{bedrock_job_id}"
 
-    # Get JSONL results
     (object_key, jsonl_output) = _get_bedrock_results(INPUT_BUCKET, jsonl_key)
     if not jsonl_output:
         logger.error(f"No results found for {bedrock_job_id}")
         return {"error": "No results found", "bedrock_job_id": bedrock_job_id}
 
-    # Parse JSONL content
     results = [json.loads(line.strip()) for line in jsonl_output.splitlines()]
 
     logger.info(f"Read {len(results)} lines of output")
 
-    # Process each result and create metadata files
     processed_results = []
     for result in results:
         paper_metadata = _parse_model_output(

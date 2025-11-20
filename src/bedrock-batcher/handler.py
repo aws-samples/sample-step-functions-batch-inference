@@ -97,7 +97,6 @@ def create_bedrock_batch_file(event: dict, context: LambdaContext):
     fh = StringIO()
 
     for result in _generate_textract_results_from_s3(event["files"]):
-        # Access the properties easily
         logger.info(
             f"Processing {result.original_file}",
             extra={"job_id": result.job_id, "text_length": len(result.text)},
